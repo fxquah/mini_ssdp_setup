@@ -3,6 +3,12 @@
 My self learning project to produce a mini replica of SSDp.
 
 ## Current instructions
+Add into `terraform.tfvars`
+
+```terraform
+aws_profile = "your-aws-profile"
+```
+
 
 ### To deploy
 For `dev`:
