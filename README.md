@@ -3,6 +3,8 @@
 My self learning project to produce a mini replica of SSDp.
 
 ## Current instructions
+
+### To deploy
 For `dev`:
 ```sh
 terraform init -backend-config=backends/dev.hcl -reconfigure
@@ -15,6 +17,17 @@ For `prod`
 terraform init -backend-config=backends/prod.hcl -reconfigure
 terraform plan -var-file=vars/prod.tfvars
 terraform apply -var-file=vars/prod.tfvars
+```
+
+### For linting
+[Format](https://developer.hashicorp.com/terraform/cli/commands/fmt)
+
+```shell
+terraform fmt -diff
+terraform fmt
+
+tflint --init                                                                                                                                                                          
+tflint --var-file=vars/dev.tfvars
 ```
 
 
