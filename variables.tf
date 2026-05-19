@@ -1,3 +1,7 @@
+variable "aws_profile" {
+  default = "default"
+}
+
 variable "aws_region" {
   type    = string
   default = "eu-west-2"

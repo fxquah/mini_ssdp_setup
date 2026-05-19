@@ -36,6 +36,8 @@ override.tf.json
 terraform.rc
 
 # Lock file (optionally commit this — remove line to track it)
-# .terraform.lock.hcl
+.terraform.lock.hcl
 
-
+# other stuff
+terraform.tfvars
+*.tfplan
