@@ -7,6 +7,6 @@ variable "environment" {
   type = string
 }
 
-variable "bucket_name" {
-  type = string
+locals {
+  bucket_name = "ssdp-ingestion-bucket-${var.environment}"
 }
