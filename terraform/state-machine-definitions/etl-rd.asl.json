@@ -1,12 +1,12 @@
 {
   "Comment": "Top-level state machine for ETL",
-  "StartAt": "RegisterCase",
+  "StartAt": "TriggerIngestion",
   "States": {
-    "StartCase": {
+    "TriggerIngestion": {
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
-        "FunctionName": "${ComingSoon}",
+        "FunctionName": "${TriggerIngestionLambda}",
         "Payload": {
           "ExecutionName.$": "$$.Execution.Name"
         }
@@ -22,7 +22,8 @@
           "MaxAttempts": 6,
           "BackoffRate": 2
         }
-      ]
+      ],
+      "End": true
     }
   }
 }
