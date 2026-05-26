@@ -1,0 +1,28 @@
+{
+  "Comment": "Top-level state machine for ETL",
+  "StartAt": "RegisterCase",
+  "States": {
+    "StartCase": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${ComingSoon}",
+        "Payload": {
+          "ExecutionName.$": "$$.Execution.Name"
+        }
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 6,
+          "BackoffRate": 2
+        }
+      ]
+    }
+  }
+}
