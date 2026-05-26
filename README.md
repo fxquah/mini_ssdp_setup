@@ -9,6 +9,9 @@ Add into `terraform.tfvars`
 aws_profile = "your-aws-profile"
 ```
 
+Update 26 May: This doesn't seem work anymore. I tried updating this directly in the `backend.tf`, but that also failed. This worked, however, `export AWS_PROFILE=sandbox-jelly`.
+
+
 
 ### To deploy
 For `dev`:
