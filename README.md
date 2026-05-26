@@ -64,3 +64,13 @@ https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-lang
 
 ### referral-dp state machine
 To come
+
+---
+
+## Notes
+S3 → your bucket → Properties tab → scroll down to "Event notifications"
+
+```sh
+touch trigger.json
+aws s3 cp trigger.json s3://ssdp-ingestion-bucket-dev
+```
