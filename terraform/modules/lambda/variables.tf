@@ -7,6 +7,11 @@ variable "publish" {
   default = true
 }
 
+variable "alias_name" {
+  type    = string
+  default = "LIVE"
+}
+
 variable "role" {
   type = string
 }

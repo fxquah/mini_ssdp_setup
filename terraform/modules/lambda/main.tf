@@ -10,8 +10,8 @@ resource "aws_lambda_function" "lambda_function" {
 }
 
 resource "aws_lambda_alias" "lambda_alias" {
-  name             = "${var.function_name}-${aws_lambda_function.lambda_function.version}"
-  description      = "${var.function_name} version : ${aws_lambda_function.lambda_function.version}"
+  name             = var.alias_name
+  description      = "Points to version ${aws_lambda_function.lambda_function.version}"
   function_name    = aws_lambda_function.lambda_function.arn
   function_version = aws_lambda_function.lambda_function.version
 }
