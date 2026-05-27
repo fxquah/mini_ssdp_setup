@@ -17,15 +17,14 @@ Update 26 May: This doesn't seem work anymore. I tried updating this directly in
 For `dev`:
 ```sh
 terraform init -backend-config=backends/dev.hcl -reconfigure
-terraform plan -var-file=vars/dev.tfvars
-tf_plan_with_output -var-file=vars/dev.tfvars
-terraform apply -var-file=vars/dev.tfvars
+terraform plan -var-file=vars/dev.tfvars -out=plan.tfplan
+terraform apply plan.tfplan
 ```
 
 For `prod`
 ```sh
 terraform init -backend-config=backends/prod.hcl -reconfigure
-terraform plan -var-file=vars/prod.tfvars
+terraform plan -var-file=vars/prod.tfvars -out=plan.tfplan
 terraform apply -var-file=vars/prod.tfvars
 ```
 
