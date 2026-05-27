@@ -9,6 +9,9 @@ init:
 plan:
 	cd $(TF_DIR) && terraform plan -var-file=vars/$(ENV).tfvars -out=plan.tfplan
 
+plan-check:
+	cd $(TF_DIR) && terraform show -json plan.tfplan | jq '[.resource_changes[] | {address, action: .change.actions}] | group_by(.action) | map({action: .[0].action, resources: map(.address)})'
+
 apply:
 	cd $(TF_DIR) && terraform apply plan.tfplan
 
