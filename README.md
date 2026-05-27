@@ -73,6 +73,7 @@ S3 → your bucket → Properties tab → scroll down to "Event notifications"
 ```sh
 touch trigger.json
 aws s3 cp trigger.json s3://ssdp-ingestion-bucket-dev
+aws s3 rm s3://ssdp-ingestion-bucket-dev/trigger.json
 ```
 
 ### `lambda_function_arn` vs `lambda_alias_arn`

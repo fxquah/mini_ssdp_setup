@@ -37,7 +37,7 @@ resource "aws_lambda_permission" "allow_s3" {
   statement_id  = "AllowS3Invoke"
   action        = "lambda:InvokeFunction"
   function_name = module.trigger_ingestion.lambda_function_name
-  qualifier     = module.trigger_ingestion.lambda_alias_name
+  # qualifier     = module.trigger_ingestion.lambda_alias_name
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.main.arn
 }
@@ -46,7 +46,7 @@ resource "aws_s3_bucket_notification" "trigger" {
   bucket = aws_s3_bucket.main.id
 
   lambda_function {
-    lambda_function_arn = module.trigger_ingestion.lambda_alias_arn
+    lambda_function_arn = module.trigger_ingestion.lambda_function_arn # tweak
     events              = ["s3:ObjectCreated:*"]
     filter_prefix       = "trigger.json"
   }
