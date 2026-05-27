@@ -21,7 +21,10 @@ resource "aws_iam_role_policy" "sfn_exec_policy" {
       {
         Effect   = "Allow"
         Action   = "lambda:InvokeFunction"
-        Resource = module.trigger_ingestion.lambda_alias_arn
+        Resource = [
+          module.trigger_ingestion.lambda_alias_arn,
+          module.trigger_ingestion.lambda_function_arn
+        ]
       },
       {
         Effect = "Allow"
@@ -53,7 +56,7 @@ resource "aws_sfn_state_machine" "etl_rd" {
   publish  = true
 
   definition = templatefile("${path.module}/state-machine-definitions/etl-rd.asl.json", {
-    TriggerIngestionLambda = module.trigger_ingestion.lambda_alias_arn
+    TriggerIngestionLambda = module.trigger_ingestion.lambda_function_arn
   })
 
   logging_configuration {
