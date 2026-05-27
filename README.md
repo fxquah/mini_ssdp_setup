@@ -18,6 +18,7 @@ For `dev`:
 ```sh
 terraform init -backend-config=backends/dev.hcl -reconfigure
 terraform plan -var-file=vars/dev.tfvars
+tf_plan_with_output -var-file=vars/dev.tfvars
 terraform apply -var-file=vars/dev.tfvars
 ```
 
@@ -74,3 +75,29 @@ S3 → your bucket → Properties tab → scroll down to "Event notifications"
 touch trigger.json
 aws s3 cp trigger.json s3://ssdp-ingestion-bucket-dev
 ```
+
+### `lambda_function_arn` vs `lambda_alias_arn`
+Using `lambda_function_arn` (no qualifier) means Step Functions invokes the $LATEST version — the unpublished, mutable snapshot of your function. 
+
+```hcl
+  definition = templatefile("${path.module}/state-machine-definitions/etl-rd.asl.json", {
+    TriggerIngestionLambda = module.trigger_ingestion.lambda_function_arn
+  })
+```
+
+```hcl
+  definition = templatefile("${path.module}/state-machine-definitions/etl-rd.asl.json", {
+    TriggerIngestionLambda = module.trigger_ingestion.lambda_alias_arn
+  })
+```
+
+- `$LATEST` is always mutable. Any code change takes effect immediately, even before terraform apply runs the publish step.
+- This means we lose the **mutability guarantee**
+- Logs will only show `$LATEST` in CloudWatch, which is less useful.
+- Aliases become irrelevant, as the state machine ignores them completely.
+
+With `lambda_alias_arn` (:LIVE), Step Functions always invokes the specific published version the alias points to at the time of execution.
+
+If you redeploy mid-execution, in-flight executions keep using the old version while new ones pick up the new one.
+
+
