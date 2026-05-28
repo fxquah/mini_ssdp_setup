@@ -41,3 +41,5 @@ terraform.rc
 # other stuff
 terraform.tfvars
 *.tfplan
+
+trigger.json

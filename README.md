@@ -100,4 +100,7 @@ With `lambda_alias_arn` (:LIVE), Step Functions always invokes the specific publ
 
 If you redeploy mid-execution, in-flight executions keep using the old version while new ones pick up the new one.
 
-
+You can retrieve information about the lambda like this 
+```sh
+aws lambda get-function --function-name ssdp-trigger-ingestion-dev
+```
