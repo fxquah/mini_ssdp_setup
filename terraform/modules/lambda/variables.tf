@@ -36,3 +36,13 @@ variable "filename" {
 variable "source_code_hash" {
   type = string
 }
+
+variable "layers" {
+  type    = list(string)
+  default = []
+}
+
+variable "environment_variables" {
+  type    = map(string)
+  default = {}
+}

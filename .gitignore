@@ -41,5 +41,9 @@ terraform.rc
 # other stuff
 terraform.tfvars
 *.tfplan
+*.zip
 
 trigger.json
+
+# built Lambda layer artefacts (run `make build-pyspy-layer` to regenerate)
+terraform/lambda_layer/

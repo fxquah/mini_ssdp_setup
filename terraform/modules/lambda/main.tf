@@ -7,6 +7,14 @@ resource "aws_lambda_function" "lambda_function" {
   runtime          = var.runtime
   filename         = var.filename
   source_code_hash = var.source_code_hash
+  layers           = var.layers
+
+  dynamic "environment" {
+    for_each = length(var.environment_variables) > 0 ? [1] : []
+    content {
+      variables = var.environment_variables
+    }
+  }
 }
 
 resource "aws_lambda_alias" "lambda_alias" {
