@@ -61,7 +61,7 @@ module "trigger_ingestion" {
   layers           = [aws_lambda_layer_version.pyspy.arn]
 
   environment_variables = {
-    ENABLE_PYSPY    = "0"
+    ENABLE_PYSPY    = "1"
     PYSPY_S3_BUCKET = local.bucket_name
   }
 }
