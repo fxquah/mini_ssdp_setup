@@ -20,9 +20,9 @@ def _bubble_sort(arr):
 
 def _slow_computation():
     # ~29M recursive calls — gives deep, recognisable stacks in py-spy samples
-    fib_result = _fib(3) # 35
+    fib_result = _fib(35) # 35
     # ~4.5M comparisons in a tight O(n²) loop — samples cluster in inner loop
-    sorted_result = _bubble_sort(list(range(10, 0, -1)))  # 3000
+    sorted_result = _bubble_sort(list(range(3000, 0, -1)))  # 3000
     return fib_result, sorted_result[-1]
 
 

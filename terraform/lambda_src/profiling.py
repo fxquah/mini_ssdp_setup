@@ -1,6 +1,7 @@
 # profiling.py — shared across all lambdas in repo 2
 import contextlib
 import os
+import signal
 import subprocess
 import tempfile
 
@@ -23,12 +24,14 @@ def maybe_pyspy(context):
         "--nonblocking",
     ]
     print(f"[pyspy] {' '.join(cmd)}")
-    spy = subprocess.Popen(cmd)
+    spy = subprocess.Popen(cmd, stderr=subprocess.PIPE)
     try:
         yield
     finally:
-        spy.terminate()
-        spy.wait()
+        spy.send_signal(signal.SIGINT)
+        _, stderr = spy.communicate(timeout=10)
+        if stderr:
+            print(f"[pyspy] stderr: {stderr.decode()}")
         with open(output, "rb") as f:
             boto3.client("s3").put_object(
                 Bucket=os.environ["PYSPY_S3_BUCKET"],

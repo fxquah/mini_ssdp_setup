@@ -18,7 +18,7 @@ variable "role" {
 
 variable "timeout" {
   type    = number
-  default = 30
+  default = 300
 }
 
 variable "handler" {
