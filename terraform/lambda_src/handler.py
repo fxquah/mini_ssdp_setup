@@ -29,6 +29,7 @@ def _slow_computation():
 def handler(event, context):
     with maybe_pyspy(context):
         fib, sort_max = _slow_computation()
+        print(f"[handler] slow computation completed")
 
     return {
         "statusCode": 200,
