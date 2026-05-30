@@ -18,7 +18,7 @@ variable "role" {
 
 variable "timeout" {
   type    = number
-  default = 30
+  default = 300
 }
 
 variable "handler" {
@@ -35,4 +35,14 @@ variable "filename" {
 
 variable "source_code_hash" {
   type = string
+}
+
+variable "layers" {
+  type    = list(string)
+  default = []
+}
+
+variable "environment_variables" {
+  type    = map(string)
+  default = {}
 }

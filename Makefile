@@ -1,7 +1,7 @@
 ENV ?= dev
 TF_DIR := terraform
 
-.PHONY: init plan apply fmt-check fmt lint
+.PHONY: init plan apply fmt-check fmt lint build-pyspy-layer
 
 init:
 	cd $(TF_DIR) && terraform init -backend-config=backends/$(ENV).hcl -reconfigure
@@ -23,3 +23,10 @@ fmt:
 
 lint:
 	cd $(TF_DIR) && tflint --init && tflint --var-file=vars/$(ENV).tfvars
+
+build-pyspy-layer:
+	rm -rf $(TF_DIR)/lambda_layer
+	docker run --rm --platform linux/amd64 \
+		-v $(PWD)/$(TF_DIR)/lambda_layer:/out \
+		python:3.12-slim \
+		sh -c "pip install py-spy -q && mkdir -p /out/bin && cp \$$(which py-spy) /out/bin/py-spy"
