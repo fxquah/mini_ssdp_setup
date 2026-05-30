@@ -20,6 +20,7 @@ def maybe_pyspy(context):
         "/opt/bin/py-spy", "record",
         "--pid", str(os.getpid()),
         "--output", output,
+        "--rate", str(os.environ.get("SAMPLING_RATE")),
         "--format", "speedscope",
         "--nonblocking",
     ]

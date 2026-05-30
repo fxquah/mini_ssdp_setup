@@ -62,6 +62,7 @@ module "trigger_ingestion" {
 
   environment_variables = {
     ENABLE_PYSPY    = "1"
+    SAMPLING_RATE   = 20
     PYSPY_S3_BUCKET = local.bucket_name
   }
 }
