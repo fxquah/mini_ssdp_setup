@@ -1,7 +1,8 @@
 ENV ?= dev
 TF_DIR := terraform
+BL_DIR := business_logic
 
-.PHONY: init plan apply fmt-check fmt lint
+.PHONY: init plan apply fmt-check fmt lint publish
 
 init:
 	cd $(TF_DIR) && terraform init -backend-config=backends/$(ENV).hcl -reconfigure
@@ -23,3 +24,6 @@ fmt:
 
 lint:
 	cd $(TF_DIR) && tflint --init && tflint --var-file=vars/$(ENV).tfvars
+
+publish:
+	$(MAKE) -C $(BL_DIR) ENV=$(ENV)
