@@ -20,8 +20,8 @@ resource "aws_lambda_function" "lambda_function" {
 }
 
 resource "aws_lambda_alias" "lambda_alias" {
-  name             = var.alias_name
-  description      = "Tracks $LATEST — code deployed externally via update-function-code"
+  name             = "${var.function_name}-${aws_lambda_function.lambda_function.version}"
+  description      = "${var.function_name} version : ${aws_lambda_function.lambda_function.version}"
   function_name    = aws_lambda_function.lambda_function.arn
-  function_version = "$LATEST"
+  function_version = aws_lambda_function.lambda_function.version
 }

@@ -57,7 +57,7 @@ resource "aws_sfn_state_machine" "etl_rd" {
   publish  = true
 
   definition = templatefile("${path.module}/state-machine-definitions/etl-rd.asl.json", {
-    TriggerIngestionSeparateLambda = module.trigger_ingestion.lambda_function_arn
+    TriggerIngestionSeparateLambda = module.trigger_ingestion.lambda_alias_name
   })
 
   logging_configuration {

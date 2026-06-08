@@ -1,5 +1,5 @@
 ENV ?= dev
-FUNCTION_NAME ?= ssdp-trigger-ingestion-separate-$(ENV)
+FUNCTION_NAME ?= ssdp-trigger-ingestion-$(ENV)
 
 HANDLERS := trigger_ingestion
 
