@@ -1,5 +1,5 @@
-resource "aws_iam_role" "sfn_exec_separate" {
-  name = "ssdp-sfn-exec-separate-${var.environment}"
+resource "aws_iam_role" "sfn_exec" {
+  name = "ssdp-sfn-exec-${var.environment}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -11,9 +11,9 @@ resource "aws_iam_role" "sfn_exec_separate" {
   })
 }
 
-resource "aws_iam_role_policy" "sfn_exec_separate_policy" {
-  name = "ssdp-sfn-exec-separate-policy-${var.environment}"
-  role = aws_iam_role.sfn_exec_separate.id
+resource "aws_iam_role_policy" "sfn_exec_policy" {
+  name = "ssdp-sfn-exec-policy-${var.environment}"
+  role = aws_iam_role.sfn_exec.id
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -22,8 +22,8 @@ resource "aws_iam_role_policy" "sfn_exec_separate_policy" {
         Effect   = "Allow"
         Action   = "lambda:InvokeFunction"
         Resource = [
-          module.trigger_ingestion_separate.lambda_alias_arn,
-          module.trigger_ingestion_separate.lambda_function_arn
+          module.trigger_ingestion.lambda_alias_arn,
+          module.trigger_ingestion.lambda_function_arn
         ]
       },
       {
@@ -46,22 +46,22 @@ resource "aws_iam_role_policy" "sfn_exec_separate_policy" {
 }
 
 
-resource "aws_cloudwatch_log_group" "etl_rd_separate_state_machine" {
-  name              = "/aws/state-machine/ssdp-etl-rd-separate-${var.environment}"
+resource "aws_cloudwatch_log_group" "etl_rd_state_machine" {
+  name              = "/aws/state-machine/ssdp-etl-rd-${var.environment}"
   retention_in_days = 14
 }
 
-resource "aws_sfn_state_machine" "etl_rd_separate" {
-  name     = "ssdp-etl-rd-separate-${var.environment}"
-  role_arn = aws_iam_role.sfn_exec_separate.arn
+resource "aws_sfn_state_machine" "etl_rd" {
+  name     = "ssdp-etl-rd-${var.environment}"
+  role_arn = aws_iam_role.sfn_exec.arn
   publish  = true
 
-  definition = templatefile("${path.module}/state-machine-definitions/etl-rd-separate.asl.json", {
-    TriggerIngestionSeparateLambda = module.trigger_ingestion_separate.lambda_function_arn
+  definition = templatefile("${path.module}/state-machine-definitions/etl-rd.asl.json", {
+    TriggerIngestionSeparateLambda = module.trigger_ingestion.lambda_function_arn
   })
 
   logging_configuration {
-    log_destination        = "${aws_cloudwatch_log_group.etl_rd_separate_state_machine.arn}:*"
+    log_destination        = "${aws_cloudwatch_log_group.etl_rd_state_machine.arn}:*"
     include_execution_data = true
     level                  = "ALL"
   }

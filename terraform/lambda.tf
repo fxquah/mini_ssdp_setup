@@ -1,6 +1,6 @@
 
-resource "aws_iam_role" "trigger_ingestion_separate_exec" {
-  name = "ssdp-trigger-ingestion-separate-exec-${var.environment}"
+resource "aws_iam_role" "trigger_ingestion_exec" {
+  name = "ssdp-trigger-ingestion-exec-${var.environment}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -12,16 +12,16 @@ resource "aws_iam_role" "trigger_ingestion_separate_exec" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "trigger_ingestion_separate_basic" {
-  role       = aws_iam_role.trigger_ingestion_separate_exec.name
+resource "aws_iam_role_policy_attachment" "trigger_ingestion_basic" {
+  role       = aws_iam_role.trigger_ingestion_exec.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-module "trigger_ingestion_separate" {
+module "trigger_ingestion" {
   source = "./modules/lambda_external"
 
-  function_name = "ssdp-trigger-ingestion-separate-${var.environment}"
-  role          = aws_iam_role.trigger_ingestion_separate_exec.arn
+  function_name = "ssdp-trigger-ingestion-${var.environment}"
+  role          = aws_iam_role.trigger_ingestion_exec.arn
   handler       = "handler.handler"
   runtime       = "python3.12"
 }
