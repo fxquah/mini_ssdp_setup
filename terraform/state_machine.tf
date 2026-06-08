@@ -1,17 +1,3 @@
-resource "aws_iam_role" "sfn_exec" {
-  name = "ssdp-sfn-exec-${var.environment}"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action    = "sts:AssumeRole"
-      Effect    = "Allow"
-      Principal = { Service = "states.amazonaws.com" }
-    }]
-  })
-}
-
-
 resource "aws_iam_role" "sfn_exec_separate" {
   name = "ssdp-sfn-exec-separate-${var.environment}"
 
@@ -57,11 +43,6 @@ resource "aws_iam_role_policy" "sfn_exec_separate_policy" {
       }
     ]
   })
-}
-
-resource "aws_cloudwatch_log_group" "etl_rd_state_machine" {
-  name              = "/aws/state-machine/ssdp-etl-rd-${var.environment}"
-  retention_in_days = 14
 }
 
 
