@@ -2,11 +2,6 @@ variable "function_name" {
   type = string
 }
 
-variable "alias_name" {
-  type    = string
-  default = "LIVE"
-}
-
 variable "role" {
   type = string
 }
