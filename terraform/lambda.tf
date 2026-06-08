@@ -23,16 +23,6 @@ resource "aws_iam_role_policy_attachment" "trigger_ingestion_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-module "trigger_ingestion" {
-  source = "./modules/lambda"
-
-  function_name    = "ssdp-trigger-ingestion-${var.environment}"
-  role             = aws_iam_role.trigger_ingestion_exec.arn
-  handler          = "handler.handler"
-  runtime          = "python3.12"
-  filename         = data.archive_file.trigger_ingestion_zip.output_path
-  source_code_hash = data.archive_file.trigger_ingestion_zip.output_base64sha256
-}
 
 resource "aws_iam_role" "trigger_ingestion_separate_exec" {
   name = "ssdp-trigger-ingestion-separate-exec-${var.environment}"
