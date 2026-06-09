@@ -25,6 +25,7 @@ module "trigger_ingestion" {
   handler          = "handler.handler"
   runtime          = "python3.12"
   publish          = true
+  
   filename         = "${path.root}/artifacts/trigger_ingestion.zip"
   source_code_hash = filebase64sha256("${path.root}/artifacts/trigger_ingestion.zip")
 }
