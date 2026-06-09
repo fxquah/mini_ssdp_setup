@@ -6,7 +6,7 @@ data "archive_file" "bootstrap_zip" {
 
 resource "aws_lambda_function" "lambda_function" {
   function_name    = var.function_name
-  publish          = true
+  publish          = var.publish
   role             = var.role
   timeout          = var.timeout
   handler          = var.handler

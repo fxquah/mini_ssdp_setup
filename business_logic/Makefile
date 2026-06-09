@@ -10,7 +10,6 @@ trigger_ingestion:
 		zip -j handler.zip handler.py && \
 		aws lambda update-function-code \
 			--function-name $(FUNCTION_NAME) \
-			--zip-file fileb://handler.zip \
-			--publish
+			--zip-file fileb://handler.zip
 
 publish-all: $(HANDLERS)

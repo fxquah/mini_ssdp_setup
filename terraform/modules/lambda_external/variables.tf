@@ -18,3 +18,9 @@ variable "handler" {
 variable "runtime" {
   type = string
 }
+
+variable "publish" {
+  description = "Enable versioning"
+  type        = bool
+  default     = true
+}
