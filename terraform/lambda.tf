@@ -24,5 +24,5 @@ module "trigger_ingestion" {
   role          = aws_iam_role.trigger_ingestion_exec.arn
   handler       = "handler.handler"
   runtime       = "python3.12"
-  publish       = "true"
+  publish       = true
 }
