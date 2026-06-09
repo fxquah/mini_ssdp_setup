@@ -11,5 +11,6 @@ trigger_ingestion:
 		aws lambda update-function-code \
 			--function-name $(FUNCTION_NAME) \
 			--zip-file fileb://handler.zip
+	cp trigger_ingestion/handler.zip ../terraform/artifacts/trigger_ingestion.zip
 
 publish-all: $(HANDLERS)

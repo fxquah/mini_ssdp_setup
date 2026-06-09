@@ -24,3 +24,13 @@ variable "publish" {
   type        = bool
   default     = true
 }
+
+variable "filename" {
+  description = "Path to the Lambda deployment package zip"
+  type        = string
+}
+
+variable "source_code_hash" {
+  description = "Base64-encoded SHA256 hash of the deployment package"
+  type        = string
+}
