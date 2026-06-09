@@ -5,13 +5,15 @@ resource "aws_lambda_function" "lambda_function" {
   timeout          = var.timeout
   handler          = var.handler
   runtime          = var.runtime
+
+  # lambda is built from a handler.zip, rather than image
   filename         = var.filename
   source_code_hash = var.source_code_hash
 }
 
 resource "aws_lambda_alias" "lambda_alias" {
-  name             = var.alias_name
-  description      = "Points to version ${aws_lambda_function.lambda_function.version}"
+  name             = "${var.function_name}-${aws_lambda_function.lambda_function.version}"
+  description      = "${var.function_name} version : ${aws_lambda_function.lambda_function.version}"
   function_name    = aws_lambda_function.lambda_function.arn
   function_version = aws_lambda_function.lambda_function.version
 }

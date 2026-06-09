@@ -1,12 +1,12 @@
 {
-  "Comment": "Top-level state machine for ETL",
+  "Comment": "Top-level state machine for ETL (separate business logic lambda)",
   "StartAt": "TriggerIngestion",
   "States": {
     "TriggerIngestion": {
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
-        "FunctionName": "${TriggerIngestionLambda}",
+        "FunctionName": "${TriggerIngestionSeparateLambda}",
         "Payload": {
           "ExecutionName.$": "$$.Execution.Name"
         }

@@ -1,8 +1,3 @@
-data "archive_file" "trigger_ingestion_zip" {
-  type        = "zip"
-  source_dir  = "${path.module}/lambda_src"
-  output_path = "${path.module}/lambda_src/handler.zip"
-}
 
 resource "aws_iam_role" "trigger_ingestion_exec" {
   name = "ssdp-trigger-ingestion-exec-${var.environment}"
@@ -23,12 +18,13 @@ resource "aws_iam_role_policy_attachment" "trigger_ingestion_basic" {
 }
 
 module "trigger_ingestion" {
-  source = "./modules/lambda"
+  source = "./modules/lambda_external"
 
   function_name    = "ssdp-trigger-ingestion-${var.environment}"
   role             = aws_iam_role.trigger_ingestion_exec.arn
   handler          = "handler.handler"
   runtime          = "python3.12"
-  filename         = data.archive_file.trigger_ingestion_zip.output_path
-  source_code_hash = data.archive_file.trigger_ingestion_zip.output_base64sha256
+  publish          = true
+  filename         = "${path.root}/artifacts/trigger_ingestion.zip"
+  source_code_hash = filebase64sha256("${path.root}/artifacts/trigger_ingestion.zip")
 }

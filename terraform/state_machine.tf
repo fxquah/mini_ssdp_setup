@@ -45,6 +45,7 @@ resource "aws_iam_role_policy" "sfn_exec_policy" {
   })
 }
 
+
 resource "aws_cloudwatch_log_group" "etl_rd_state_machine" {
   name              = "/aws/state-machine/ssdp-etl-rd-${var.environment}"
   retention_in_days = 14
@@ -56,7 +57,7 @@ resource "aws_sfn_state_machine" "etl_rd" {
   publish  = true
 
   definition = templatefile("${path.module}/state-machine-definitions/etl-rd.asl.json", {
-    TriggerIngestionLambda = module.trigger_ingestion.lambda_function_arn  # tweak
+    TriggerIngestionSeparateLambda = module.trigger_ingestion.lambda_alias_arn
   })
 
   logging_configuration {
